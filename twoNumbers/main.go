@@ -11,6 +11,11 @@ func main() {
 	fmt.Println(result)
 }
 
+type kv struct {
+	Index int
+	Value int
+}
+
 func twoSum(nums []int, target int) []int {
 	sum := 0
 	var index1, index2 int = 0, len(nums) - 1
@@ -31,20 +36,10 @@ func twoSum(nums []int, target int) []int {
 	return []int{}
 }
 
-type kv struct {
-	Index int
-	Value int
-}
-
 func Sort(nums []int) []kv {
-	hashTable := make(map[int]int)
-
-	for index, value := range nums {
-		hashTable[index] = value
-	}
 
 	var ss []kv
-	for k, v := range hashTable {
+	for k, v := range nums {
 		ss = append(ss, kv{k, v})
 	}
 
