@@ -7,17 +7,20 @@ import (
 
 func main() {
 
+	result := twoSum([]int{2, 7, 11, 15}, 9)
+	fmt.Println(result)
 }
 
 func twoSum(nums []int, target int) []int {
 	sum := 0
 	var index1, index2 int = 0, len(nums) - 1
+	sortNumbers := Sort(nums)
 
-	for i := 0; i < len(nums); i++ {
-		sum = nums[index1] + nums[index2]
+	for i := 0; i < len(sortNumbers); i++ {
+		sum = sortNumbers[index1].Value + sortNumbers[index2].Value
 
 		if sum == target {
-			return []int{index1, index2}
+			return []int{sortNumbers[index1].Index, sortNumbers[index2].Index}
 		} else if sum > target {
 			index2--
 		} else {
@@ -28,17 +31,26 @@ func twoSum(nums []int, target int) []int {
 	return []int{}
 }
 
-func Sort(nums []int) [][]int {
-	var sortNums [][]int
-	for index, line := range nums {
-		sortNums[index][index] = line
+type kv struct {
+	Index int
+	Value int
+}
+
+func Sort(nums []int) []kv {
+	hashTable := make(map[int]int)
+
+	for index, value := range nums {
+		hashTable[index] = value
 	}
 
-	sort.Slice(sortNums, func(i, j int) bool {
-		return sortNums[i][i] < sortNums[j][0]
-	})
-	for _, linha := range sortNums {
-		fmt.Println(linha)
+	var ss []kv
+	for k, v := range hashTable {
+		ss = append(ss, kv{k, v})
 	}
-	return sortNums
+
+	sort.Slice(ss, func(i, j int) bool {
+		return ss[i].Value < ss[j].Value
+	})
+
+	return ss
 }
